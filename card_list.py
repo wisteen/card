@@ -119,10 +119,14 @@ class Whot:
         if self.types == "p":
             if self.card[:2] == play_spot[-1][:2] and self.card in player1_cards:
                 Whot.action(self)
+                Whot.computer(self)
             elif self.card[-4:] == play_spot[-1][-4:] and self.card in player1_cards:
                 Whot.action(self)
+                Whot.computer(self)
             elif self.card[-4:] =="whot" :
                 Whot.action(self)
+                Whot.whot(self)
+                Whot.computer(self)
             else:
                 print("bad")
 
@@ -134,6 +138,14 @@ class Whot:
         index = self.player1.index(self.card)
         del self.player1[index]
         print(self.player1)
+        action.has_been_called = True
+    def whot(self):
+        ask_whot = input("What shape do you want? ")
+
+    def computer(self):
+        if action.has_been_called:
+            print("hi am the computer")
+
 my_whot = Whot(user_input,user_input_type, play_spot, player1_cards)
 my_whot.play()
 
