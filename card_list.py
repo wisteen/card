@@ -105,48 +105,121 @@ all_the_cards = int(len(newlist)) + int(len(player2_cards)) + int(len(player1_ca
 
 print(all_the_cards)
 
-user_input_type = input("type 'p' to play or 'm' for market: ")
-user_input = input("type name of card: ")
+#user_input_type = input("type 'p' to play or 'm' for market: ")
+#user_input = input("type name of card: ")
 
 class Whot:
-    def __init__(self, card, types, spot, player1):
-        self.card = card
-        self.types = types
+    def __init__(self, spot, player1, player2,market):
+        #self.card = card
+        #self.types = types
         self.spot = spot
         self.player1 = player1
+        self.player2 = player2
+        self.market = market
 
     def play(self):
-        if self.types == "p":
-            if self.card[:2] == play_spot[-1][:2] and self.card in player1_cards:
-                Whot.action(self)
+        user_input_type = input("type 'p' to play or 'm' for market: ") 
+        if user_input_type == "p":
+            user_input = input("type name of card: ")
+            if user_input[:2] == play_spot[-1][:2] and user_input in player1_cards:
+                
+                print("good")
+                self.spot =  play_spot
+                self.spot.append(user_input)
+                print(f"GAME SPOT #### {self.spot}\n")
+                index = self.player1.index(self.spot[-1])
+                del self.player1[index]
+                print(f"YOUR CARDS ####{self.player1}\n")
+                Whot.has_been_called = True
                 Whot.computer(self)
-            elif self.card[-4:] == play_spot[-1][-4:] and self.card in player1_cards:
-                Whot.action(self)
+            elif user_input[-4:] == play_spot[-1][-4:] and user_input in player1_cards:
+                print("good")
+                self.spot =  play_spot
+                self.spot.append(user_input)
+                print(f"GAME SPOT #### {self.spot}\n")
+                index = self.player1.index(self.spot[-1])
+                del self.player1[index]
+                print(f"YOUR CARDS ####{self.player1}\n")
+                Whot.has_been_called = True
                 Whot.computer(self)
-            elif self.card[-4:] =="whot" :
-                Whot.action(self)
+            elif user_input[-4:] =="whot" :
+                print("good")
+                self.spot =  play_spot
+                self.spot.append(user_input)
+                print(f"GAME SPOT #### {self.spot}\n")
+                index = self.player1.index(self.spot[-1])
+                del self.player1[index]
+                print(f"YOUR CARDS ####{self.player1}\n")
+                Whot.has_been_called = True
                 Whot.whot(self)
                 Whot.computer(self)
             else:
-                print("bad")
+         
+                print("bad play again")
+                Whot.play(self)
+        elif user_input_type == "m":
+            market = self.market[-1]
+            print(f"YOU PICKED {market}")
+            self.player1.append(market)
+            index2 = self.market.index(market)
+            del self.market[index2]
+            Whot.has_been_called = True
+            Whot.computer(self)
 
-    def action(self):
-        print("good")
-        self.spot =  play_spot
-        self.spot.append(self.card)
-        print(self.spot)
-        index = self.player1.index(self.card)
-        del self.player1[index]
-        print(self.player1)
-        action.has_been_called = True
+
     def whot(self):
         ask_whot = input("What shape do you want? ")
 
     def computer(self):
-        if action.has_been_called:
-            print("hi am the computer")
+        if Whot.has_been_called:
+            print("Computer's turn")
+            #if self.spot[-1][:2] in self.player2[:2]:
+            
+            y = []
+            y1 = []
+            y2 = []
+            for x in self.player2:
+                if x:
+                    y.append(x[:2])
+                    y1.append(x)
+                    y2.append(x[-4:])
+            if self.spot[-1][:2] in y:
+                index2 = y.index(self.spot[-1][:2])
+                self.player2 = y1 
+                card = self.player2[index2]
+                print(f"THE COMPUTER PLAYS #### {card}")
+                self.spot.append(card)
+                del self.player2[index2]
+                print(f"SPOT #####{self.spot}\n\n")
+                print(f"COMPUTER GAMES #####{self.player2}\n\n")
+                Whot.play(self)
+                Whot.has_been_called = False
+            elif self.spot[-1][-4:] in y2:
+                index2 = y2.index(self.spot[-1][-4:])
+                self.player2 = y1
+                card = self.spot[index2]
+                print(f"THE COMPUTER PLAYS #### {card}")
+                self.spot.append(card)
+                del self.player2[index2]
+                print(f"SPOT #####{self.spot}\n\n")
+                print(f"COMPUTER GAMES #####{self.player2}\n\n")
+                Whot.play(self)
+                Whot.action.has_been_called = False
+            else:
+                print("Computer no get card to play so he go market to get!")
 
-my_whot = Whot(user_input,user_input_type, play_spot, player1_cards)
+                market = self.market[-1]
+                self.player2.append(market)
+                index2 = self.market.index(market)
+                del self.market[index2]
+                Whot.play(self)
+                Whot.action.has_been_called = False
+
+
+
+
+
+
+my_whot = Whot( play_spot, player1_cards, player2_cards,newlist)
 my_whot.play()
 
-#print(my_whot.card[:2])
