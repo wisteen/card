@@ -173,7 +173,6 @@ class Whot:
     def computer(self):
         if Whot.has_been_called:
             print("Computer's turn")
-            #if self.spot[-1][:2] in self.player2[:2]:
             
             y = []
             y1 = []
@@ -204,7 +203,7 @@ class Whot:
                 print(f"SPOT #####{self.spot}\n\n")
                 print(f"COMPUTER GAMES #####{self.player2}\n\n")
                 Whot.play(self)
-                Whot.action.has_been_called = False
+                Whot.has_been_called = False
             else:
                 print("Computer no get card to play so he go market to get!")
 
@@ -213,7 +212,7 @@ class Whot:
                 index2 = self.market.index(market)
                 del self.market[index2]
                 Whot.play(self)
-                Whot.action.has_been_called = False
+                Whot.has_been_called = False
 
 
 
